@@ -6,5 +6,6 @@ public class JournalRunner {
         Journal journal = new Journal();
         journal.createConnection();
         System.out.println("Connection created");
+        journal.createTable();
     }
 }
