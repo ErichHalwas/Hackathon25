@@ -74,3 +74,7 @@ select {
     transition: all 0.3s ease;
     margin: 20px;
 }
+
+h1 {
+    size: 200px;
+}
