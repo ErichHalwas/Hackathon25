@@ -1,1 +1,1 @@
-# Hackathon25
+ For our project, we decided on a well-being web app called "". It's a simple journal app where users can sign up or log in to access their journal entries. Users can create new journal entries with their titles and dates and edit and delete any journal entries. If you've got anything on your mind, write it down! You can always view it anytime!
