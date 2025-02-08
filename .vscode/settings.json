@@ -1,6 +1,6 @@
 {
-    "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "c:\\OneDrive\\Documents\\mysql-connector-j-9.2.0.jar"
-    ]
+    "java.project.sourcePaths": [
+        "demo/src/main/java/com/journal/demo"
+    ],
+    "java.compile.nullAnalysis.mode": "automatic"
 }
