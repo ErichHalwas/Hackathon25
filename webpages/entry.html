@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <section class="top">
+        <h1>Title</h1>
+        <h1>Date</h1>
+    </section>
+    <div class="toolbar">
+        <button onclick="document.execCommand('bold')">Bold</button>
+        <button onclick="document.execCommand('italic')">Italic</button>
+        <select id="font-size">
+            <option value="4px">4px</option>
+            <option value="8px">8px</option>
+            <option value="12px">12px</option>
+            <option value="16px">16px</option>
+            <option value="20px">20px</option>
+            <option value="24px">24px</option>
+            <option value="28px">28px</option>
+            <option value="32px">32px</option>
+            <option value="36px">36px</option>
+            <option value="40px">40px</option>
+        </select>
+    </div>
+    <section class="center">
+        <div class="entry" contenteditable="true" id="text">
+            Type your text here...
+        </div>
+    </section>
+    <script>
+        document.getElementById('font-size').addEventListener('change', function() {
+            var selectedSize = this.value;
+            var selection = window.getSelection();
+            var range = selection.getRangeAt(0);
+            if (selection.rangeCount > 0) {
+                var selectedText = selection.toString();
+                var span = document.createElement('span');
+                span.style.fontSize = selectedSize;
+                range.deleteContents();
+                range.insertNode(span);
+                span.appendChild(document.createTextNode(selectedText)); // Add the text back into the span
+            } else {
+                document.getElementById('text').style.fontSize = selectedSize;
+            }
+        });
+        const textDiv = document.getElementById('text');
+        textDiv.addEventListener('focus', function () {
+        if (textDiv.textContent.trim() === 'Type your text here...') {
+            textDiv.textContent = ''; 
+            textDib.style.color = 'black';
+        }
+        });
+        textDiv.addEventListener('blur', function () {
+        if (textDiv.textContent.trim() === '') {
+            textDiv.textContent = 'Type your text here...';
+            textDiv.style.color = '#888';
+        }
+        });
+        textDiv.addEventListener('input', function () {
+        if (textDiv.textContent.trim() === '') {
+            textDiv.classList.add('placeholder'); 
+            textDiv.style.color = '#888'; 
+        } else {
+            textDiv.style.color = 'black'; 
+        }
+        });
+        document.getElementById('save').addEventListener('click', async function() {
+            const text = document.getElementById('text').innerHTML;
+            const response = await fetch('/saveEntry', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify({ text })
+            });
+            if (response.ok) {
+                alert('Entry saved successfully');
+            } else {
+                alert('Failed to save entry');
+            }
+        });
+    </script>
+    <footer>
+        <button id="save">Save</button>
+    </footer>
+</body>
+</html>
