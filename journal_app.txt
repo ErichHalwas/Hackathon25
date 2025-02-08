@@ -1,0 +1,14 @@
+CREATE TABLE users (
+    user_id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE journal_entries (
+    entry_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    title VARCHAR(25) NOT NULL,
+    date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    content TEXT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
