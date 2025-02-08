@@ -16,7 +16,7 @@
             <label for="name">Username:</label><br>
             <input type="text" id="username" name="username" required><br>
             <label for="password">Password:</label><br>
-            <input type="text" id="password" name="password" required><br>
+            <input type="password" id="password" name="password" required><br>
             <button type="submit">Sign Up</button>
         </form>
     </section>
@@ -33,6 +33,7 @@
             });
             if (response.ok) {
                 alert('User created');
+                window.location.href = 'entries.html';
             } else {
                 alert('Error creating user');
             }
