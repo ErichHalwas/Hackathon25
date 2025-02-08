@@ -29,6 +29,7 @@ public class DatabaseConnection {
             JOptionPane.showMessageDialog(null, "Database created successfully");
         } catch (SQLException se) {
             JOptionPane.showMessageDialog(null, se.getMessage());
+            System.exit(1);
         }
     }
 
@@ -64,4 +65,11 @@ public class DatabaseConnection {
             System.exit(2);
         }
     }
+/** 
+    public void insertData() throws SQLException {
+        try {
+            Connection connection = DriverManager.getConnection
+        }
+    }
+*/
 }
