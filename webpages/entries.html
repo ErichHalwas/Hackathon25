@@ -13,11 +13,36 @@
     <section class="top">
         <h1>Entries</h1>
     </section>
-    <section class="center">
-        <p>You don't have any entries. Click on "New" to get started!</p>
+    <section class="center" id="entries">
+        <p>Loading entries...</p>
     </section>
     <footer>
-        <a href ="entry.html"><button>New</button></a>
+        <a href="entry.html"><button>New</button></a>
+        <a href="welcome.html"><button>Log Out</button></a>
     </footer>
+    <script>
+        async function loadEntries() {
+            const response = await fetch('/entries', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            const entries = await response.json();
+            const entriesDiv = document.getElementById('entries');
+            entriesDiv.innerHTML = '';
+            if (entries.length === 0) {
+                entriesDiv.innerHTML = '<p>You don\'t have any entries. Click on "New" to get started!</p>';
+            } else {
+                entries.forEach(entry => {
+                    const entryDiv = document.createElement('div');
+                    entryDiv.classList.add('entry');
+                    entryDiv.innerHTML = `<p>${entry.text}</p><small>${new Date(entry.createdAt).toLocaleString()}</small>`;
+                    entriesDiv.appendChild(entryDiv);
+                });
+            }
+        }
+
+        loadEntries();
+    </script>
 </body>
 </html>
