@@ -8,18 +8,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/signup")
 public class SignUpController {
-   // private static final String SECRET_KEY = "mySecretKey";
-
+    
     @PostMapping
-    public void getSignUpCredentials(@RequestBody LoginRequest loginRequest) {
+    public void getSignUpCredentials(@RequestBody SignUp loginRequest) {
         System.out.println("Username: " + loginRequest.getUsername());
         System.out.println("Password: " + loginRequest.getPassword());
         System.out.println("Sign up successful");
-        //DatabaseConnection db = new DatabaseConnection();
-        //db.createDatabase();
-        //db.createTable();
-        //db.insertData(loginRequest);
+        String user = loginRequest.getUsername(); 
+        String pass = loginRequest.getPassword();
+        try {
+            DatabaseConnection db = new DatabaseConnection(user, pass);
+            db.closeConnection();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
-    
-
 }
