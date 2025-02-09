@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.journal.HACKATHON25.database.DatabaseConnection;
 
 @RestController
@@ -18,8 +17,6 @@ public class SignUpController {
         System.out.println("Sign up successful");
         String user = loginRequest.getUsername(); 
         String pass = loginRequest.getPassword();
-        System.out.println(user);
-        System.out.println(pass);
         try {
             DatabaseConnection db = new DatabaseConnection(user, pass);
             db.closeConnection();
