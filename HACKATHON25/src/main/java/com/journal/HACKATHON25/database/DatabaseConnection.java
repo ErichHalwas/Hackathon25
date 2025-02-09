@@ -131,7 +131,7 @@ public class DatabaseConnection {
                 this.authenticate = true;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalStateException("Error authenticating data: " + e.getMessage());
         }
         return this.authenticate;
     }

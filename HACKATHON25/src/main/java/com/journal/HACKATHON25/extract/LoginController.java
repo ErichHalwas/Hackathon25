@@ -1,5 +1,6 @@
 package com.journal.HACKATHON25.extract;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,7 @@ public class LoginController {
     private final UserService userService;
 
     @PostMapping
-    public void handleLogin(@RequestBody Login login) {
+    public ResponseEntity<?> handleLogin(@RequestBody Login login) {
         System.out.println("Username: " + login.getUsername());
         System.out.println("Password: " + login.getPassword());
         System.out.println("Sign up successful");
@@ -28,12 +29,15 @@ public class LoginController {
             db.closeConnection();
             if(db.authenticateUser()) {
                 System.out.println("Logged In");
+                return ResponseEntity.ok().body("Login Successful");
             } else {
                 System.out.println("Invalid Username/Password");
+                return ResponseEntity.ok().body("Invalid Username/Password");
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
+        return ResponseEntity.ok().body("Login Successful");
     }
 
     public LoginController(UserService userService) {
