@@ -88,7 +88,7 @@
                 }
             })
             .then(data => {
-                if(data === "Saved Entry Created") {
+                if(data === "New Entry Created") {
                     window.location.href = `entry.html?id=${data._id}`;
                 } else {
                     throw new Error('Failed to create new entry');
