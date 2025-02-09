@@ -34,6 +34,15 @@ public class DatabaseConnection {
         this.pass = null;
     }
 
+    public DatabaseConnection(String currentUser, int entryId) {
+        url = "jdbc:mysql://localhost:3306/journal_app";
+        username = "root";
+        password = "Itismeak2945$";
+        this.currentUser = currentUser;
+        this.pass = null;
+        this.entryId = entryId;
+    }
+
     public DatabaseConnection(String currentUser, String pass) {
         url = "jdbc:mysql://localhost:3306/journal_app";
         username = "root";
@@ -67,6 +76,18 @@ public class DatabaseConnection {
             getEntryID();
             this.title = title;
             updateJournal();
+        }
+    }
+
+    public void deleteEntries() {
+        String sql = "DELETE FROM journal_entries WHERE user_id = ? AND entry_id = ?";
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, this.userId);
+            statement.setInt(2, this.entryId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new IllegalStateException("Error deleting data: " + e.getMessage());
         }
     }
 
