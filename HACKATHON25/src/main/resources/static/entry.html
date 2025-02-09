@@ -53,7 +53,7 @@
                 span.style.fontSize = selectedSize;
                 range.deleteContents();
                 range.insertNode(span);
-                span.appendChild(document.createTextNode(selectedText)); // Add the text back into the span
+                span.appendChild(document.createTextNode(selectedText));
             } else {
                 document.getElementById('text').style.fontSize = selectedSize;
             }
@@ -84,8 +84,26 @@
 
         // Save entry handler
         document.getElementById('save').addEventListener('click', async function() {
-            const title = document.getElementById('title').textContent;
+            let title = document.getElementById('title').textContent.trim();
             const text = document.getElementById('text').innerHTML;
+
+            if (!title) {
+                // Fetch existing entries to determine the next available title
+                const response = await fetch('/entries', {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+                const entries = await response.json();
+                let journalNumber = 1;
+                let titleExists = true;
+                while (titleExists) {
+                    title = `Journal ${journalNumber}`;
+                    titleExists = entries.some(entry => entry.title === title);
+                    journalNumber++;
+                }
+            }
+
             const response = await fetch('/saveEntry', {
                 method: 'POST',
                 headers: {
