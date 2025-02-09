@@ -18,4 +18,5 @@ text TEXT NOT NULL,
 FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
+INSERT INTO users (username, password) VALUES ('disha', 'password');
 
