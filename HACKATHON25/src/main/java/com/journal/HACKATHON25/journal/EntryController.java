@@ -24,10 +24,12 @@ public class EntryController {
         this.user = userService.getCurrentUser();
         System.out.println(this.user);
         this.text = entryRequest.getText();
-        DatabaseConnection db = new DatabaseConnection(this.user, this.title, this.text);
-        db.closeConnection();
-        //db.createTable();
-        //db.insertData(loginRequest);
+        try {
+            DatabaseConnection db = new DatabaseConnection(this.user, this.title, this.text);
+            db.closeConnection();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
     
     public EntryController(UserService userService) {

@@ -71,6 +71,7 @@
 
         // Creates a new entry
         document.getElementById('newEntry').addEventListener('click', async function() {
+            console.log('Begin request');
             const response = await fetch('/createEntry', {
                 method: 'POST',
                 headers: {
@@ -79,6 +80,7 @@
                 },
                 body: JSON.stringify({ text: "null" })
             });
+            console.log('End request');
             if (response.ok) {
                 console.log('Success');
                 const newEntry = await response.json();
