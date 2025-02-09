@@ -38,9 +38,10 @@
                     const entryDiv = document.createElement('div');
                     entryDiv.classList.add('entry');
                     entryDiv.innerHTML = `
-                        <h2 onclick="viewEntry('${entry.entryId}')">${entry.title}</h2>
-                        <p>Date: ${new Date(entry.date).toLocaleString()}</p>
-                        <button onclick="deleteEntry('${entry.entryId}')">Delete</button>
+                        <h2>${entry.title}</h2>
+                        <p>Last modified: ${new Date(entry.updatedAt).toLocaleString()}</p>
+                        <button onclick="viewEntry('${entry._id}')">View</button>
+                        <button onclick="deleteEntry('${entry._id}')">Delete</button>
                     `;
                     entriesDiv.appendChild(entryDiv);
                 });
@@ -59,17 +60,25 @@
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
-            });
-            if (response.ok) {
-                alert('Entry deleted');
-                loadEntries();
-            } else {
-                alert('Failed to delete entry');
-            }
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Deletion failed');
+                }
+            })
+            .then(data => {
+                if (data === "Entry deleted") {;
+                    window.location.href = 'entries.html';
+                } else {
+                    alert('Deletion failed');
+                }
+            })
         }
 
         // Creates a new entry
-        document.getElementById('newEntry').addEventListener('click', async function() {
+        document.getElementById('newEntry').addEventListener('submit', async function() {
             console.log('Begin request');
             const response = await fetch('/createEntry', {
                 method: 'POST',
@@ -78,22 +87,14 @@
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 },
                 body: JSON.stringify({ text: "null" })
-            })
-            .then(response => {
-                if(response.ok) {
-                    return response.text();
-                } else {
-                    throw new Error('Failed to create new entry');
-                }
-            })
-            .then(data => {
-                if(data === "New Entry Created") {
-                    window.location.href = `entry.html?id=${data._id}`;
-                } else {
-                    throw new Error('Failed to create new entry');
-                }
             });
-              
+            if (response.ok) {
+                console.log('Success');
+                const newEntry = await response.json();
+                window.location.href = `entry.html?id=${newEntry._id}`;
+            } else {
+                alert('Failed to create new entry');
+            }
         });
 
         // Logs out
