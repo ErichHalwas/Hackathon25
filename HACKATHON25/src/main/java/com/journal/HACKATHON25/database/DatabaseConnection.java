@@ -90,7 +90,8 @@ public class DatabaseConnection {
         String sql = "UPDATE journal_entries SET title = ?, text = ? WHERE user_id = ?";
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            System.out.println("Updating ID: " + this.title + " with Title: " + " and Content: " + this.text);
+            System.out.println("Updating ID: " + this.userId + " with Title: " + this.title + " and Content: " + this.text);
+            preparedStatement.setInt(1, this.userId);
             preparedStatement.setString(1, this.title);
             preparedStatement.setString(2, this.text);
             preparedStatement.executeUpdate();
