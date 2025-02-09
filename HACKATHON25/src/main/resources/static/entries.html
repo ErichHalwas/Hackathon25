@@ -22,7 +22,7 @@
     </footer>
     <script>
         async function loadEntries() {
-            const response = await fetch('http://localhost:3000/entries', {
+            const response = await fetch('/entries', {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
@@ -52,7 +52,7 @@
         }
 
         async function deleteEntry(id) {
-            const response = await fetch(`http://localhost:3000/entries/${id}`, {
+            const response = await fetch(`/entries/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -67,7 +67,7 @@
         }
 
         document.getElementById('newEntry').addEventListener('click', async function() {
-            const response = await fetch('http://localhost:3000/saveEntry', {
+            const response = await fetch('/saveEntry', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -11,8 +11,8 @@
 </head>
 <body>
     <section class="top">
-        <h1>Title</h1>
-        <h1>Date</h1>
+        <h1 contenteditable="true" id="title">Title</h1>
+        <h1 id="date"></h1>
     </section>
     <div class="toolbar">
         <button onclick="document.execCommand('bold')">Bold</button>
@@ -39,6 +39,10 @@
         <button id="save">Save</button>
     </footer>
     <script>
+        // Display the current date
+        document.getElementById('date').textContent = new Date().toLocaleDateString();
+
+        // Font size change handler
         document.getElementById('font-size').addEventListener('change', function() {
             var selectedSize = this.value;
             var selection = window.getSelection();
@@ -54,28 +58,33 @@
                 document.getElementById('text').style.fontSize = selectedSize;
             }
         });
+
+        // Placeholder text handling
         const textDiv = document.getElementById('text');
         textDiv.addEventListener('focus', function () {
-        if (textDiv.textContent.trim() === 'Type your text here...') {
-            textDiv.textContent = ''; 
-            textDib.style.color = 'black';
-        }
+            if (textDiv.textContent.trim() === 'Type your text here...') {
+                textDiv.textContent = ''; 
+                textDiv.style.color = 'black';
+            }
         });
         textDiv.addEventListener('blur', function () {
-        if (textDiv.textContent.trim() === '') {
-            textDiv.textContent = 'Type your text here...';
-            textDiv.style.color = '#888';
-        }
+            if (textDiv.textContent.trim() === '') {
+                textDiv.textContent = 'Type your text here...';
+                textDiv.style.color = '#888';
+            }
         });
         textDiv.addEventListener('input', function () {
-        if (textDiv.textContent.trim() === '') {
-            textDiv.classList.add('placeholder'); 
-            textDiv.style.color = '#888'; 
-        } else {
-            textDiv.style.color = 'black'; 
-        }
+            if (textDiv.textContent.trim() === '') {
+                textDiv.classList.add('placeholder'); 
+                textDiv.style.color = '#888'; 
+            } else {
+                textDiv.style.color = 'black'; 
+            }
         });
+
+        // Save entry handler
         document.getElementById('save').addEventListener('click', async function() {
+            const title = document.getElementById('title').textContent;
             const text = document.getElementById('text').innerHTML;
             const response = await fetch('/saveEntry', {
                 method: 'POST',
@@ -83,7 +92,7 @@
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 },
-                body: JSON.stringify({ text })
+                body: JSON.stringify({ title, text })
             });
             if (response.ok) {
                 alert('Entry saved successfully');
