@@ -15,6 +15,7 @@ public class SignUpController {
     public void getSignUpCredentials(@RequestBody LoginRequest loginRequest) {
         System.out.println("Username: " + loginRequest.getUsername());
         System.out.println("Password: " + loginRequest.getPassword());
+        System.out.println("Sign up successful");
         //DatabaseConnection db = new DatabaseConnection();
         //db.createDatabase();
         //db.createTable();
