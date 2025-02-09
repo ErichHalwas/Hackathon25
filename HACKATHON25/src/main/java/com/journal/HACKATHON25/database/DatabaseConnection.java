@@ -34,6 +34,16 @@ public class DatabaseConnection {
         this.pass = null;
     }
 
+    public DatabaseConnection(String currentUser, int entryId) {
+        url = "jdbc:mysql://localhost:3306/journal_app";
+        username = "root";
+        password = "Itismeak2945$";
+        this.currentUser = currentUser;
+        this.pass = null;
+        this.entryId = entryId;
+        getUserID();
+    }
+
     public DatabaseConnection(String currentUser, String pass) {
         url = "jdbc:mysql://localhost:3306/journal_app";
         username = "root";
