@@ -6,8 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
+
+import com.journal.HACKATHON25.send.SendEntry;
 
 public class DatabaseConnection {
     public final String url;
@@ -21,6 +25,14 @@ public class DatabaseConnection {
     private boolean authenticate;
     private int entryId;
 
+
+    public DatabaseConnection(String currentUser) {
+        url = "jdbc:mysql://localhost:3306/journal_app";
+        username = "root";
+        password = "Itismeak2945$";
+        this.currentUser = currentUser;
+        this.pass = null;
+    }
 
     public DatabaseConnection(String currentUser, String pass) {
         url = "jdbc:mysql://localhost:3306/journal_app";
@@ -56,6 +68,25 @@ public class DatabaseConnection {
             this.title = title;
             updateJournal();
         }
+    }
+
+    public List<SendEntry> getAllEntries() {
+        List<SendEntry> entries = new ArrayList<>();
+        String sql = "SELECT * FROM journal_entries";
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while(resultSet.next()) {
+                entries.add(new SendEntry(resultSet.getInt("entry_id"),
+                resultSet.getInt("user_id"),
+                resultSet.getString("title"),
+                resultSet.getString("date"),
+                resultSet.getString("text")));
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException("Error sending data: " + e.getMessage());
+        }
+        return entries;
     }
 
     public void insertDataUsers() {

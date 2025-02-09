@@ -25,7 +25,7 @@ public class SignUpController {
         this.pass = loginRequest.getPassword();
         System.out.println(userService.getCurrentUser());
         try {
-            DatabaseConnection db = new DatabaseConnection(user, this.pass);
+            DatabaseConnection db = new DatabaseConnection(this.user, this.pass);
             db.closeConnection();
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
