@@ -29,6 +29,7 @@ public class DatabaseConnection {
         url = "jdbc:mysql://localhost:3306/journal_app";
         username = "root";
         password = "Itismeak2945$"; 
+        this.currentUser = currentUser;
         this.pass = null;
         this.title = title;
         this.text = text;
@@ -50,12 +51,13 @@ public class DatabaseConnection {
     }
 
     public void insertDataJournal() {
-        String sql = "INSERT INTO journal_entries (title, content) VALUES (?, ?)";
+        String sql = "INSERT INTO journal_entries (user, title, content) VALUES (?, ?, ?)";
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            System.out.println(this.title + " " + this.text);
-            preparedStatement.setString(1, this.title);
-            preparedStatement.setString(2, this.text);
+            System.out.println(this.currentUser + " " + this.title + " " + this.text);
+            preparedStatement.setString(1, this.currentUser);
+            preparedStatement.setString(2, this.title);
+            preparedStatement.setString(3, this.title);
             preparedStatement.executeUpdate();
             JOptionPane.showMessageDialog(null, "Data inserted successfully");
         } catch (SQLException e) {
@@ -64,10 +66,10 @@ public class DatabaseConnection {
     }
 
     public void updateJournal() {
-        String sql = "UPDATE journal_entries SET title = ?, text = ?";
+        String sql = "UPDATE journal_entries SET title = ?, text = ? WHERE user_id = ?";
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            System.out.println(this.title + " " + this.text);
+            System.out.println("Updating ID: " + this.title + " with Title: " + " and Content: " + this.text);
             preparedStatement.setString(1, this.title);
             preparedStatement.setString(2, this.text);
             preparedStatement.executeUpdate();
