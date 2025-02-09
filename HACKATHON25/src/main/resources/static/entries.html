@@ -21,8 +21,9 @@
         <button id="logout">Log Out</button>
     </footer>
     <script>
+        // Displays all entries
         async function loadEntries() {
-            const response = await fetch('http://localhost:3000/entries', {
+            const response = await fetch('/entries', {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
@@ -47,12 +48,14 @@
             }
         }
 
+        // Redirects to desired entry
         async function viewEntry(id) {
             window.location.href = `entry.html?id=${id}`;
         }
-
+        
+        // Removes an entry
         async function deleteEntry(id) {
-            const response = await fetch(`http://localhost:3000/entries/${id}`, {
+            const response = await fetch(`/entries/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -66,8 +69,9 @@
             }
         }
 
+        // Creates a new entry
         document.getElementById('newEntry').addEventListener('click', async function() {
-            const response = await fetch('http://localhost:3000/saveEntry', {
+            const response = await fetch('/saveEntry', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -83,6 +87,7 @@
             }
         });
 
+        // Logs out
         document.getElementById('logout').addEventListener('click', function() {
             localStorage.removeItem('token');
             window.location.href = 'welcome.html';
