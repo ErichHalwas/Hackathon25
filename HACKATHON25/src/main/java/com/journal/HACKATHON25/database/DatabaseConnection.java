@@ -31,7 +31,6 @@ public final class DatabaseConnection {
             preparedStatement.setString(1, this.user);
             preparedStatement.setString(2, this.pass);
             preparedStatement.executeUpdate();
-            System.out.println("Data inserted successfully");
             JOptionPane.showMessageDialog(null, "Data inserted successfully");
         } catch (SQLException e) {
             throw new IllegalStateException("Error inserting data: " + e.getMessage());
