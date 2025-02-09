@@ -8,17 +8,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/saveEntry")
 public class EntryController {
-   // private static final String SECRET_KEY = "mySecretKey";
 
     @PostMapping
     public void saveEntry(@RequestBody EntryRequest entryRequest) {
         System.out.println("Title: " + entryRequest.getTitle());
         System.out.println("Text: " + entryRequest.getText());
         System.out.println("Entry successful");
-        //DatabaseConnection db = new DatabaseConnection();
-        //db.createDatabase();
-        //db.createTable();
-        //db.insertData(loginRequest);
     }
     
 
