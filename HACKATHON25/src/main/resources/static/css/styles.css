@@ -78,3 +78,8 @@ select {
 h1 {
     size: 200px;
 }
+
+img {
+    height: 300px;
+    width: 300px;
+}
