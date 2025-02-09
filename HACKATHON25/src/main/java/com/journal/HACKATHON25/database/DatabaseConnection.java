@@ -13,11 +13,12 @@ public class DatabaseConnection {
     public final String url;
     public final String username;
     public final String password;
-    public String currentUser; 
+    public String currentUser = " "; 
     private final String pass;
     private String title;
     private String text;
     private int userId;
+    private boolean authenticate;
 
     public DatabaseConnection(String currentUser, String pass) {
         url = "jdbc:mysql://localhost:3306/journal_app";
@@ -26,6 +27,15 @@ public class DatabaseConnection {
         this.currentUser = currentUser;
         this.pass = pass;   
         insertDataUsers();
+    }
+
+    public DatabaseConnection(String currentUser, String pass, boolean authenticate) {
+        url = "jdbc:mysql://localhost:3306/journal_app";
+        username = "root";
+        password = "Itismeak2945$";
+        this.currentUser = currentUser;
+        this.pass = pass;
+        this.authenticate = authenticate;
     }
 
     public DatabaseConnection(String currentUser, String title, String text) {
@@ -106,6 +116,24 @@ public class DatabaseConnection {
         } catch (SQLException e) {
             throw new IllegalStateException("Error closing connection: " + e.getMessage());
         }
+    }
+
+    public boolean authenticateUser() {
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, this.currentUser);
+            preparedStatement.setString(2, this.pass);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()) {
+                this.authenticate = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return this.authenticate;
     }
 
 }
