@@ -13,7 +13,7 @@ public class EntryController {
     @PostMapping
     public void saveEntry(@RequestBody EntryRequest entryRequest) {
         System.out.println("Title: " + entryRequest.getTitle());
-        System.out.println("Content: " + entryRequest.getContent());
+        System.out.println("Text: " + entryRequest.getText());
         System.out.println("Entry successful");
         //DatabaseConnection db = new DatabaseConnection();
         //db.createDatabase();

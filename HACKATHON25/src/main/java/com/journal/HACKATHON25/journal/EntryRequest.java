@@ -2,11 +2,11 @@ package com.journal.HACKATHON25.journal;
 
 public class EntryRequest {
     private String title;
-    private String content;
+    private String text;
 
-    public EntryRequest(String title, String content) {
+    public EntryRequest(String title, String text) {
         this.title = title;
-        this.content = content;
+        this.text = text;
     }   
     public String getTitle() {
         return title;
@@ -16,12 +16,12 @@ public class EntryRequest {
         this.title = title;
     }
 
-    public String getContent() {
-        return content;
+    public String getText() {
+        return text;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setText(String text) {
+        this.text = text;
     }
     
 }
