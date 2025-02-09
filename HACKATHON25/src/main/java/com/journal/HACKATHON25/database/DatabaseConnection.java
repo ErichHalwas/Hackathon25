@@ -3,7 +3,9 @@ package com.journal.HACKATHON25.database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.JOptionPane;
 
@@ -15,6 +17,7 @@ public class DatabaseConnection {
     private final String pass;
     private String title;
     private String text;
+    private int userId;
 
     public DatabaseConnection(String currentUser, String pass) {
         url = "jdbc:mysql://localhost:3306/journal_app";
@@ -33,6 +36,7 @@ public class DatabaseConnection {
         this.pass = null;
         this.title = title;
         this.text = text;
+        getUserID();
         insertDataJournal();
     }
 
@@ -50,14 +54,31 @@ public class DatabaseConnection {
         }
     }
 
+    public void getUserID() {
+        String sql = "SELECT * FROM users WHERE username = '" + this.currentUser + "'";
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            if (resultSet.next()) {
+                this.userId = resultSet.getInt("user_id");
+                System.out.println("User ID: " + this.userId);
+            }
+               
+        } catch (SQLException e) {
+            throw new IllegalStateException("Error inserting data: " + e.getMessage());
+        }
+
+    }
     public void insertDataJournal() {
-        String sql = "INSERT INTO journal_entries (user, title, content) VALUES (?, ?, ?)";
+        
+        String sql = "INSERT INTO journal_entries (user_id, title, text) VALUES (?, ?, ?)";
+
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            System.out.println(this.currentUser + " " + this.title + " " + this.text);
-            preparedStatement.setString(1, this.currentUser);
+            System.out.println(this.userId + " " + this.title + " " + this.text);
+            preparedStatement.setInt(1, this.userId);
             preparedStatement.setString(2, this.title);
-            preparedStatement.setString(3, this.title);
+            preparedStatement.setString(3, this.text);
             preparedStatement.executeUpdate();
             JOptionPane.showMessageDialog(null, "Data inserted successfully");
         } catch (SQLException e) {
