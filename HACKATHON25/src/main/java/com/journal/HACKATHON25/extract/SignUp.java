@@ -9,7 +9,7 @@ public class SignUp {
         this.password = password;
     }   
     public String getUsername() {
-        return username;
+        return this.username;
     }
 
     public void setUsername(String username) {
