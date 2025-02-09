@@ -82,6 +82,26 @@
             }
         });
 
+        // Fetch entry data and populate fields
+        async function fetchEntryData() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const entryId = urlParams.get('id');
+            if (entryId) {
+                const response = await fetch(`/entries/${entryId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+                if (response.ok) {
+                    const entry = await response.json();
+                    document.getElementById('title').textContent = entry.title;
+                    document.getElementById('text').innerHTML = entry.text;
+                } else {
+                    alert('Failed to load entry');
+                }
+            }
+        }
+
         // Save entry handler
         document.getElementById('save').addEventListener('click', async function() {
             let title = document.getElementById('title').textContent.trim();
