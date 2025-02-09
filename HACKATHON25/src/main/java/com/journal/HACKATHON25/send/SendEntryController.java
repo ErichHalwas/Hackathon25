@@ -2,11 +2,8 @@ package com.journal.HACKATHON25.send;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 
 import com.journal.HACKATHON25.database.DatabaseConnection;
 import com.journal.HACKATHON25.service.UserService;
@@ -18,6 +15,7 @@ public class SendEntryController {
     private final UserService userService;
     private String user;
 
+    @GetMapping
     public ResponseEntity<List<SendEntry>> getAllEntries() {
         List<SendEntry> entries = null;
         this.user = userService.getCurrentUser();
