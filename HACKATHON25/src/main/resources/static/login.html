@@ -45,14 +45,6 @@
                     alert('Login failed');
                 }
             })
-            if (response.ok) {
-                const { token } = await response.json();
-                localStorage.setItem('token', token);
-                alert('Logged in');
-                window.location.href = 'entries.html';
-            } else {
-                alert('Invalid credentials');
-            }
         });
     </script>
 </body>
