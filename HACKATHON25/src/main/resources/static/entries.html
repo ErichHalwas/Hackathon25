@@ -39,8 +39,8 @@
                     entryDiv.classList.add('entry');
                     entryDiv.innerHTML = `
                         <h2>${entry.title}</h2>
-                        <p>Last modified: ${new Date(entry.updatedAt).toLocaleString()}</p>
-                        <button onclick="viewEntry('${entry._id}')">View</button>
+                        <p>Date: ${new Date(entry.date).toLocaleString()}</p>
+                        <button onclick="viewEntry('${entry.date}')">View</button>
                         <button onclick="deleteEntry('${entry._id}')">Delete</button>
                     `;
                     entriesDiv.appendChild(entryDiv);
