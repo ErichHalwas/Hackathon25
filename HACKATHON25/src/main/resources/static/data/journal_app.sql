@@ -1,3 +1,4 @@
+/*
 USE journal_app;
 
 DROP TABLE IF EXISTS journal_entries;
@@ -17,5 +18,5 @@ date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 text TEXT NOT NULL,
 FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
-
+*/
 
