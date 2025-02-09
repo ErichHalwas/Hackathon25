@@ -80,6 +80,7 @@
                 body: JSON.stringify({ text: "null" })
             });
             if (response.ok) {
+                console.log('Success');
                 const newEntry = await response.json();
                 window.location.href = `entry.html?id=${newEntry._id}`;
             } else {
