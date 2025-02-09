@@ -38,7 +38,7 @@ public class DatabaseConnection {
         this.authenticate = authenticate;
     }
 
-    public DatabaseConnection(String currentUser, String title, String text) {
+    public DatabaseConnection(String currentUser, String title, String text, boolean newEntry) {
         url = "jdbc:mysql://localhost:3306/journal_app";
         username = "root";
         password = "Itismeak2945$"; 
@@ -46,8 +46,13 @@ public class DatabaseConnection {
         this.pass = null;
         this.title = title;
         this.text = text;
-        getUserID();
-        insertDataJournal();
+        if (newEntry) {
+            getUserID();
+            insertDataJournal();
+        } else {
+            getUserID();
+            updateJournal();
+        }
     }
 
     public void insertDataUsers() {
@@ -131,7 +136,7 @@ public class DatabaseConnection {
                 this.authenticate = true;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalStateException("Error authenticating data: " + e.getMessage());
         }
         return this.authenticate;
     }

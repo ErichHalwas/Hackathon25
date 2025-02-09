@@ -1,4 +1,4 @@
-package com.journal.HACKATHON25.journal;
+package com.journal.HACKATHON25.save;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,32 +10,32 @@ import com.journal.HACKATHON25.database.DatabaseConnection;
 import com.journal.HACKATHON25.service.UserService;
 
 @RestController
-@RequestMapping("/createEntry")
-public class EntryController {
-   // private static final String SECRET_KEY = "mySecretKey";
-    private String user = " ";
-    private final String title = " ";
+@RequestMapping("/saveEntry")
+public class SaveController {
+    private String user;
+    private String title;
     private String text;
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<?> saveEntry(@RequestBody EntryRequest entryRequest) {
-        System.out.println("Text: " + entryRequest.getText());
-        System.out.println("Entry successful");
+    public ResponseEntity<?> saveEntry(@RequestBody Save save) {
+        System.out.println("Text: " + save.getText());
+        System.out.println("Title: " + save.getTitle());
+        System.out.println("Entry saved successful");
         this.user = userService.getCurrentUser();
+        this.title = save.getTitle();
         System.out.println(this.user);
-        this.text = entryRequest.getText();
+        this.text = save.getText();
         try {
-            DatabaseConnection db = new DatabaseConnection(this.user, this.title, this.text, true);
+            DatabaseConnection db = new DatabaseConnection(this.user, this.title, this.text, false);
             db.closeConnection();
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
-        return ResponseEntity.ok().body("New Entry Created");
+        return ResponseEntity.ok().body("Saved Entry Created");
     }
     
-    public EntryController(UserService userService) {
+    public SaveController(UserService userService) {
         this.userService = userService;
     }
-
 }
