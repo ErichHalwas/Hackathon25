@@ -38,10 +38,9 @@
                     const entryDiv = document.createElement('div');
                     entryDiv.classList.add('entry');
                     entryDiv.innerHTML = `
-                        <h2>${entry.title}</h2>
+                        <h2 onclick="viewEntry('${entry.entryId}')">${entry.title}</h2>
                         <p>Date: ${new Date(entry.date).toLocaleString()}</p>
-                        <button onclick="viewEntry('${entry.date}')">View</button>
-                        <button onclick="deleteEntry('${entry._id}')">Delete</button>
+                        <button onclick="deleteEntry('${entry.entryId}')">Delete</button>
                     `;
                     entriesDiv.appendChild(entryDiv);
                 });
