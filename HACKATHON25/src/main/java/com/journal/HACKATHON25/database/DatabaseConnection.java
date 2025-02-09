@@ -15,10 +15,12 @@ public class DatabaseConnection {
     public final String password;
     public String currentUser = " "; 
     private final String pass;
-    private String title;
+    private String title = " ";
     private String text;
     private int userId;
     private boolean authenticate;
+    private int entryId;
+
 
     public DatabaseConnection(String currentUser, String pass) {
         url = "jdbc:mysql://localhost:3306/journal_app";
@@ -44,13 +46,14 @@ public class DatabaseConnection {
         password = "Itismeak2945$"; 
         this.currentUser = currentUser;
         this.pass = null;
-        this.title = title;
         this.text = text;
         if (newEntry) {
             getUserID();
             insertDataJournal();
         } else {
             getUserID();
+            getEntryID();
+            this.title = title;
             updateJournal();
         }
     }
@@ -66,6 +69,30 @@ public class DatabaseConnection {
             JOptionPane.showMessageDialog(null, "Data inserted successfully");
         } catch (SQLException e) {
             throw new IllegalStateException("Error inserting data: " + e.getMessage());
+        }
+    }
+
+    public void getEntryID() {
+        String sql;
+        boolean hasTitle = (!this.title.equals(" "));
+        if (hasTitle) {
+            sql = "SELECT * FROM journal_entries WHERE user_id = ? AND title = ?";
+        } else {
+            sql = "SELECT * FROM journal_entries WHERE user_id = ? ORDER BY date DESC LIMIT 1";
+        }
+            try(Connection connection = DriverManager.getConnection(url, username, password)) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, this.userId);
+            if (hasTitle) {
+                statement.setString(2, this.title);
+            }
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                this.entryId= resultSet.getInt("entry_id");
+                System.out.println("Entry ID: " + this.entryId);
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException("Error saving data: " + e.getMessage());
         }
     }
 
@@ -102,13 +129,14 @@ public class DatabaseConnection {
     }
 
     public void updateJournal() {
-        String sql = "UPDATE journal_entries SET title = ?, text = ? WHERE user_id = ?";
+        String sql = "UPDATE journal_entries SET title = ?, text = ? WHERE user_id = ? AND entry_id = ?";
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            System.out.println("Updating ID: " + this.userId + " with Title: " + this.title + " and Content: " + this.text);
-            preparedStatement.setInt(1, this.userId);
+            System.out.println("Updating ID: " + this.userId + " with Title: " + this.title + " and Content: " + this.text + " and Entry: " + this.entryId);
+            preparedStatement.setInt(3, this.userId);
             preparedStatement.setString(1, this.title);
             preparedStatement.setString(2, this.text);
+            preparedStatement.setInt(4, this.entryId);
             preparedStatement.executeUpdate();
             JOptionPane.showMessageDialog(null, "Data inserted successfully");
         } catch (SQLException e) {

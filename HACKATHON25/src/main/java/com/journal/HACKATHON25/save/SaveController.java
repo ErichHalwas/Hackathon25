@@ -23,6 +23,7 @@ public class SaveController {
         System.out.println("Title: " + save.getTitle());
         System.out.println("Entry saved successful");
         this.user = userService.getCurrentUser();
+        System.out.println(this.user);
         this.title = save.getTitle();
         System.out.println(this.user);
         this.text = save.getText();
