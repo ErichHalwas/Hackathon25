@@ -97,7 +97,6 @@
             })
             .then(data => {
                 if (data === "New Entry Created") {
-                    const newEntry = await response.json();
                     window.location.href = `entry.html?id=${newEntry._id}`;
                 } else {
                     alert('Login failed');
