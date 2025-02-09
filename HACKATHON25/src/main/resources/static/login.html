@@ -30,7 +30,21 @@
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password })
-            });
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Login failed');
+                }
+            })
+            .then(data => {
+                if (data === "Login Successful") {
+                    window.location.href = 'entries.html';
+                } else {
+                    alert('Login failed');
+                }
+            })
             if (response.ok) {
                 const { token } = await response.json();
                 localStorage.setItem('token', token);
