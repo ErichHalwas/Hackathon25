@@ -3,6 +3,8 @@ package com.journal.HACKATHON25.send;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,7 +18,7 @@ public class SendEntryController {
     private final UserService userService;
     private String user;
 
-    public List<SendEntry> getAllEntries() {
+    public ResponseEntity<List<SendEntry>> getAllEntries() {
         List<SendEntry> entries = null;
         this.user = userService.getCurrentUser();
         try {
@@ -25,7 +27,7 @@ public class SendEntryController {
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
-        return entries;
+        return ResponseEntity.ok(entries);
     }
 
     public SendEntryController(UserService userService) {
