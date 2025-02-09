@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,7 +30,7 @@ public class SendEntryController {
         }
         return ResponseEntity.ok(entries);
     }
-
+/** 
     @GetMapping("/{id}")
     public ResponseEntity<SendEntry> getEntryById(@PathVariable int id) {
         SendEntry entry = null;
@@ -44,6 +43,7 @@ public class SendEntryController {
         }
         return ResponseEntity.ok(entry);
     }
+        */
 
     public SendEntryController(UserService userService) {
         this.userService = userService;

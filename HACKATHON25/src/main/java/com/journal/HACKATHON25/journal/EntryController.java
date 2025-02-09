@@ -37,5 +37,4 @@ public class EntryController {
     public EntryController(UserService userService) {
         this.userService = userService;
     }
-
 }

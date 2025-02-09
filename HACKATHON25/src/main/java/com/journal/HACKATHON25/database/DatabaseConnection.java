@@ -32,17 +32,6 @@ public class DatabaseConnection {
         password = "Itismeak2945$";
         this.currentUser = currentUser;
         this.pass = null;
-        getUserID();
-    }
-
-    public DatabaseConnection(String currentUser, int entryId) {
-        url = "jdbc:mysql://localhost:3306/journal_app";
-        username = "root";
-        password = "Itismeak2945$";
-        this.currentUser = currentUser;
-        this.pass = null;
-        this.entryId = entryId;
-        getUserID();
     }
 
     public DatabaseConnection(String currentUser, String pass) {
@@ -80,7 +69,7 @@ public class DatabaseConnection {
             updateJournal();
         }
     }
-
+/** 
     public void deleteEntries() {
         String sql = "DELETE FROM journal_entries WHERE user_id = ? AND entry_id = ?";
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
@@ -92,7 +81,7 @@ public class DatabaseConnection {
             throw new IllegalStateException("Error deleting data: " + e.getMessage());
         }
     }
-
+*/
     public List<SendEntry> getAllEntries() {
         List<SendEntry> entries = new ArrayList<>();
         String sql = "SELECT * FROM journal_entries";
@@ -151,10 +140,11 @@ public class DatabaseConnection {
     }
 
     public void getUserID() {
-        String sql = "SELECT * FROM users WHERE username = '" + this.currentUser + "'";
+        String sql = "SELECT * FROM users WHERE username = ?";
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, this.currentUser);
+            ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 this.userId = resultSet.getInt("user_id");
                 System.out.println("User ID: " + this.userId);
@@ -176,7 +166,7 @@ public class DatabaseConnection {
             preparedStatement.setString(2, this.title);
             preparedStatement.setString(3, this.text);
             preparedStatement.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Data inserted successfully");
+            //JOptionPane.showMessageDialog(null, "Data inserted successfully");
         } catch (SQLException e) {
             throw new IllegalStateException("Error inserting data: " + e.getMessage());
         }
@@ -197,7 +187,7 @@ public class DatabaseConnection {
             throw new IllegalStateException("Error inserting data: " + e.getMessage());
         }
     }
-
+/** 
     public SendEntry getEntry() {
         SendEntry entry;
         String sql = "SELECT * FROM journal_entries WHERE user_id = ? AND entry_id = ?";
@@ -216,6 +206,7 @@ public class DatabaseConnection {
         }
         return entry;
     }
+        */
     public void closeConnection() {
         try {
             DriverManager.getConnection(url, username, password).close();
