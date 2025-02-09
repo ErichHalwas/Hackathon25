@@ -1,4 +1,4 @@
-package com.journal.HACKATHON25.extract;
+package com.journal.HACKATHON25.journal;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -6,15 +6,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/signup")
-public class SignUpController {
+@RequestMapping("/saveEntry")
+public class EntryController {
    // private static final String SECRET_KEY = "mySecretKey";
 
     @PostMapping
-    public void getSignUpCredentials(@RequestBody LoginRequest loginRequest) {
-        System.out.println("Username: " + loginRequest.getUsername());
-        System.out.println("Password: " + loginRequest.getPassword());
-        System.out.println("Sign up successful");
+    public void saveEntry(@RequestBody EntryRequest entryRequest) {
+        System.out.println("Title: " + entryRequest.getTitle());
+        System.out.println("Content: " + entryRequest.getContent());
+        System.out.println("Entry successful");
         //DatabaseConnection db = new DatabaseConnection();
         //db.createDatabase();
         //db.createTable();
