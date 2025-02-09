@@ -31,6 +31,7 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password })
             });
+            console.log(response);
             if (response.ok) {
                 alert('User created');
                 window.location.href = 'entries.html';
