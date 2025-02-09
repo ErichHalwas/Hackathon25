@@ -71,7 +71,7 @@
 
         // Creates a new entry
         document.getElementById('newEntry').addEventListener('click', async function() {
-            const response = await fetch('/saveEntry', {
+            const response = await fetch('/createEntry', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
