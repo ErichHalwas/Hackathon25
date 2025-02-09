@@ -17,12 +17,12 @@
         <p>Loading entries...</p>
     </section>
     <footer>
-        <a href="entry.html"><button>New</button></a>
-        <a href="welcome.html"><button>Log Out</button></a>
+        <button id="newEntry">New</button>
+        <button id="logout">Log Out</button>
     </footer>
     <script>
         async function loadEntries() {
-            const response = await fetch('/entries', {
+            const response = await fetch('http://localhost:3000/entries', {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
@@ -36,11 +36,57 @@
                 entries.forEach(entry => {
                     const entryDiv = document.createElement('div');
                     entryDiv.classList.add('entry');
-                    entryDiv.innerHTML = `<p>${entry.text}</p><small>${new Date(entry.createdAt).toLocaleString()}</small>`;
+                    entryDiv.innerHTML = `
+                        <h2>${entry.title}</h2>
+                        <p>Last modified: ${new Date(entry.updatedAt).toLocaleString()}</p>
+                        <button onclick="viewEntry('${entry._id}')">View</button>
+                        <button onclick="deleteEntry('${entry._id}')">Delete</button>
+                    `;
                     entriesDiv.appendChild(entryDiv);
                 });
             }
         }
+
+        async function viewEntry(id) {
+            window.location.href = `entry.html?id=${id}`;
+        }
+
+        async function deleteEntry(id) {
+            const response = await fetch(`http://localhost:3000/entries/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            if (response.ok) {
+                alert('Entry deleted');
+                loadEntries();
+            } else {
+                alert('Failed to delete entry');
+            }
+        }
+
+        document.getElementById('newEntry').addEventListener('click', async function() {
+            const response = await fetch('http://localhost:3000/saveEntry', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify({ text: '' })
+            });
+            if (response.ok) {
+                const newEntry = await response.json();
+                window.location.href = `entry.html?id=${newEntry._id}`;
+            } else {
+                alert('Failed to create new entry');
+            }
+        });
+
+        document.getElementById('logout').addEventListener('click', function() {
+            localStorage.removeItem('token');
+            window.location.href = 'welcome.html';
+        });
 
         loadEntries();
     </script>
