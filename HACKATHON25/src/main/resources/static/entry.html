@@ -91,7 +91,14 @@
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     }
-                });
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                     throw new Error('Login failed');
+                    }
+                })
                 if (response.ok) {
                     const entry = await response.json();
                     document.getElementById('title').textContent = entry.title;
