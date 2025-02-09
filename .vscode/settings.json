@@ -4,8 +4,10 @@
     ],
     "java.compile.nullAnalysis.mode": "automatic",
     "java.project.referencedLibraries": [
-        "lib/**/*.jar"
+        "lib/**/*.jar",
+        "c:\\OneDrive\\Documents\\mysql-connector-j-9.2.0.jar"
     ],
+    
     "sqltools.connections": [
         {
             "mysqlOptions": {
