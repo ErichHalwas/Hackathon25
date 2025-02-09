@@ -77,9 +77,10 @@
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 },
-                body: JSON.stringify({ text: '' })
+                body: JSON.stringify({ text: ' ' })
             });
             if (response.ok) {
+                console.log('Success');
                 const newEntry = await response.json();
                 window.location.href = `entry.html?id=${newEntry._id}`;
             } else {
