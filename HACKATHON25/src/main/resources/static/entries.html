@@ -71,13 +71,14 @@
 
         // Creates a new entry
         document.getElementById('newEntry').addEventListener('click', async function() {
+            console.log('Begin request');
             const response = await fetch('/createEntry', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 },
-                body: JSON.stringify({ text: ' ' })
+                body: JSON.stringify({ text: "null" })
             });
             if (response.ok) {
                 console.log('Success');
