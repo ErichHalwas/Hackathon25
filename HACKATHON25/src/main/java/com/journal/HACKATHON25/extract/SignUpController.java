@@ -10,11 +10,8 @@ import com.journal.HACKATHON25.database.DatabaseConnection;
 @RestController
 @RequestMapping("/signup")
 public class SignUpController {
-   // private static final String SECRET_KEY = "mySecretKey";
-    //private SignUpRepository signUpRepository;
-
-    @PostMapping
     
+    @PostMapping
     public void getSignUpCredentials(@RequestBody SignUp loginRequest) {
         System.out.println("Username: " + loginRequest.getUsername());
         System.out.println("Password: " + loginRequest.getPassword());
@@ -25,21 +22,9 @@ public class SignUpController {
         System.out.println(pass);
         try {
             DatabaseConnection db = new DatabaseConnection(user, pass);
+            db.closeConnection();
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
-/** 
-    public @ResponseBody String addNewUser(@RequestBody LoginRequest loginRequest) {
-        signUpRepository.save(loginRequest);
-        return "Saved";
-    }
-        */
-/** 
-    @GetMapping
-    public @ResponseBody Iterable<LoginRequest> getAllUsers() {
-    // This returns a JSON or XML with the users
-        return userRepository.findAll();
-    }
-*/
 }
