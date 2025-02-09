@@ -1,6 +1,6 @@
 body {
     margin: 0px;
-    background-color: rgb(202, 71, 71);
+    background-color: rgb(58, 164, 216);
     font-family: 'Roboto', serif;
 }
 
@@ -17,14 +17,14 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    background-color: rgb(211, 19, 19);
+    background-color: rgb(19, 86, 211);
 }
 
 .center {
     background-color: white;
     height: 1000px;
-    border-left: 50px solid rgb(202, 71, 71);
-    border-right: 50px solid rgb(202, 71, 71);
+    border-left: 50px solid rgb(58, 164, 216);
+    border-right: 50px solid rgb(58, 164, 216);
     box-sizing: border-box;
 }
 
