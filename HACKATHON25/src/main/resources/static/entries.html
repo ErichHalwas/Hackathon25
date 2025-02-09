@@ -87,14 +87,22 @@
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 },
                 body: JSON.stringify({ text: "null" })
-            });
-            if (response.ok) {
-                console.log('Success');
-                const newEntry = await response.json();
-                window.location.href = `entry.html?id=${newEntry._id}`;
-            } else {
-                alert('Failed to create new entry');
-            }
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Login failed');
+                }
+            })
+            .then(data => {
+                if (data === "New Entry Created") {
+                    const newEntry = await response.json();
+                    window.location.href = `entry.html?id=${newEntry._id}`;
+                } else {
+                    alert('Login failed');
+                }
+            })
         });
 
         // Logs out
