@@ -4,8 +4,23 @@
     ],
     "java.compile.nullAnalysis.mode": "automatic",
     "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "c:\\OneDrive\\Documents\\mysql-connector-j-9.2.0.jar"
+        "lib/**/*.jar"
+    ],
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "MYSQL_local",
+            "password": "Itismeak2945$",
+            "username": "root",
+            "database": "journal_app"
+        }
     ],
     "java.configuration.updateBuildConfiguration": "interactive"
 }
