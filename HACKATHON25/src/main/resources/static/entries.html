@@ -79,15 +79,22 @@
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 },
                 body: JSON.stringify({ text: "null" })
+            })
+            .then(response => {
+                if(response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to create new entry');
+                }
+            })
+            .then(data => {
+                if(data === "Saved Entry Created") {
+                    window.location.href = `entry.html?id=${data._id}`;
+                } else {
+                    throw new Error('Failed to create new entry');
+                }
             });
-            console.log(response);
-            if (response.ok) {
-                alert('Success');
-                const newEntry = await response.json();
-                window.location.href = `entry.html?id=${newEntry._id}`;
-            } else {
-                alert('Failed to create new entry');
-            }
+              
         });
 
         // Logs out
