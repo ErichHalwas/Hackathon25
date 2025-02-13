@@ -78,7 +78,8 @@
         }
 
         // Creates a new entry
-        document.getElementById('newEntry').addEventListener('submit', async function() {
+        document.getElementById('newEntry').addEventListener('submit', async function(event) {
+            event.preventDefault();
             console.log('Begin request');
             const response = await fetch('/createEntry', {
                 method: 'POST',
@@ -88,18 +89,18 @@
                 },
                 body: JSON.stringify({ text: "null" })
             })
-            .then(response => {
+            .then (response => {
                 if (response.ok) {
                     return response.text();
                 } else {
                     throw new Error('Login failed');
                 }
             })
-            .then(data => {
+            then(data => {
                 if (data === "New Entry Created") {
                     window.location.href = `entry.html?id=${newEntry._id}`;
                 } else {
-                    alert('Login failed');
+                    alert('Entry Creation Failed');
                 }
             })
         });
