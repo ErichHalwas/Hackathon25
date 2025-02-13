@@ -8,4 +8,3 @@ Anika (backend developer) - Main backend developer. Worked on the SQL databases 
 
 Erich (frontend developer) - Worked on the UI of the web app, designing the welcome, sign up, login, entry, and entries list page. Worked on HTML, CSS, and Javascript.
 
-Venkat (logo designer) - Didn't do much, just designed the logo for our app Daily Pages.
